@@ -19,6 +19,10 @@ type SignResponse {
   user: User!
 }
 
+type LogoutResponse {
+  loggedOut: Boolean!
+}
+
 type Query {
   auth(id: Int!): Auth!
 }
@@ -27,7 +31,7 @@ type Mutation {
   signup(signUpInput: SignUpInput!): SignResponse!
   signin(signInInput: SignInInput!): SignResponse!
   updateAuth(updateAuthInput: UpdateAuthInput!): Auth!
-  removeAuth(id: Int!): Auth!
+  logout(id: Int!): LogoutResponse!
 }
 
 input SignUpInput {

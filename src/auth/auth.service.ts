@@ -15,6 +15,7 @@ export class AuthService {
     private configService: ConfigService,
   ) {}
 
+  // The user can register his account
   async signup(signUpInput: SignUpInput) {
     const hashedPassword = await argon.hash(signUpInput.password);
     const user = await this.prisma.user.create({
@@ -35,6 +36,7 @@ export class AuthService {
     return { accessToken, refreshToken, user };
   }
 
+  // The user can log in his account
   async signin(signInInput: SignInInput) {
     const user = await this.prisma.user.findUnique({
       where: {
@@ -65,6 +67,18 @@ export class AuthService {
     return { accessToken, refreshToken, user };
   }
 
+  // The user can log out his account
+  async logout(userId: number) {
+    await this.prisma.user.updateMany({
+      where: {
+        id: userId,
+        hashedRefreshToken: { not: null },
+      },
+      data: { hashedRefreshToken: null },
+    });
+    return { loggedOut: true };
+  }
+
   findOne(id: number) {
     return `This action returns a #${id} auth`;
   }
@@ -77,6 +91,7 @@ export class AuthService {
     return `This action removes a #${id} auth`;
   }
 
+  // Creating token to keep user data safe
   async createTokens(userId: number, email: string) {
     const accessToken = this.jwtService.sign(
       {
@@ -102,6 +117,7 @@ export class AuthService {
     return { accessToken, refreshToken };
   }
 
+  // Refreshing the token the keep user data safe
   async updateRefreshToken(userId: number, refreshToken: string) {
     const hashedRefreshToken = await argon.hash(refreshToken);
     await this.prisma.user.update({
