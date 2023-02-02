@@ -27,6 +27,7 @@
     "@nestjs/graphql": "^10.1.7",
     "@nestjs/jwt": "^10.0.1",
     "@nestjs/platform-express": "^9.0.0",
+    "@nestjs/swagger": "^6.1.4",
     "@prisma/client": "^4.9.0",
     "apollo-server-express": "^3.11.1",
     "argon2": "^0.30.3",
