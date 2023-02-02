@@ -13,7 +13,6 @@ async function bootstrap() {
     .setTitle('Swagger Eloboost')
     .setDescription('Description des différentes routes')
     .setVersion('1.0')
-    .addTag('default test')
     .build();
   const document = SwaggerModule.createDocument(app, config);
   SwaggerModule.setup('api', app, document);

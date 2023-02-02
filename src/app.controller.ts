@@ -6,8 +6,13 @@ import { User } from '@prisma/client';
 export class AppController {
   constructor(private readonly userService: UserService) {}
 
-  @Post('user')
-  async signupUser(
+  @Get('users')
+  async getUsers(): Promise<User[]> {
+    return this.userService.findAll();
+  }
+
+  @Post('register')
+  async signUpUser(
     @Body()
     userData: {
       username: string;
@@ -18,12 +23,17 @@ export class AppController {
     return this.userService.createUser(userData);
   }
 
-  @Get('user')
-  async getUsers(): Promise<User[]> {
-    return this.userService.users({});
+  @Post('login')
+  async Login(): Promise<User> {
+    return this.userService.user({});
   }
 
-  @Patch('user')
+  @Post('logout')
+  async Logout(): Promise<User> {
+    return this.userService.user({});
+  }
+
+  @Patch('user/{id}')
   async updateUser(
     @Body()
     userData: {
@@ -35,7 +45,7 @@ export class AppController {
     // return this.userService.updateUser(userData);
   }
 
-  @Delete('user')
+  @Delete('user/{id}')
   async deleteUser(
     @Body()
     userData: {
